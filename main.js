@@ -3,6 +3,7 @@ canvas.focus();
 var ctx = canvas.getContext('2d');
 var img = canvas.toDataURL("image/png");
 
+
 canvas.width = window.innerWidth/2;
 canvas.height = window.innerHeight/2;
 
@@ -11,6 +12,25 @@ var lefto = (window.innerWidth-canvas.width)/2,
 
 canvas.style.left = lefto + 'px';
 canvas.style.top = topo + 'px';
+
+var cursorL = document.getElementById('cursor1'),
+	cursorR = document.getElementById('cursor2');
+
+var brush = true;
+
+function showBrush() {
+	if (brush) {
+		document.getElementById('brush').innerHTML = "Show brush";
+		cursorR.style.opacity = 0;
+		cursorL.style.opacity = 0;
+		brush = false;
+	} else {
+		document.getElementById('brush').innerHTML = "Hide brush";
+		cursorR.style.opacity = 1;
+		cursorL.style.opacity = 1;
+		brush = true;
+	};
+}
 
 window.onload = function() {
 	ctx.beginPath();
@@ -59,24 +79,24 @@ function doKeyDown(e) {
 		if (erasing) {
 			ctx.fillStyle = "white";
 			ctx.strokeStyle = "white";
-			document.getElementById('cursor1').style.background = 'white';
-			document.getElementById('cursor1').style.border = '1px solid black';
-			document.getElementById('cursor2').style.background = 'white';
-			document.getElementById('cursor2').style.border = '1px solid black';
+			cursorL.style.background = 'white';
+			cursorL.style.border = '1px solid black';
+			cursorR.style.background = 'white';
+			cursorR.style.border = '1px solid black';
 		} else {
 			ctx.fillStyle = "black";
 			ctx.strokeStyle = "black";
-			document.getElementById('cursor1').style.background = 'black';
-			document.getElementById('cursor1').style.border = '1px solid rgba(0,0,0,0)';
-			document.getElementById('cursor2').style.background = 'black';
-			document.getElementById('cursor2').style.border = '1px solid rgba(0,0,0,0)';
+			cursorL.style.background = 'black';
+			cursorL.style.border = '1px solid rgba(0,0,0,0)';
+			cursorR.style.background = 'black';
+			cursorR.style.border = '1px solid rgba(0,0,0,0)';
 		}
 	};
 
-	document.getElementById('cursor1').style.width = 2*r + 'px';
-	document.getElementById('cursor1').style.height = 2*r + 'px';
-	document.getElementById('cursor2').style.width = 2*r + 'px';
-	document.getElementById('cursor2').style.height = 2*r + 'px';
+	cursorL.style.width = 2*r + 'px';
+	cursorL.style.height = 2*r + 'px';
+	cursorR.style.width = 2*r + 'px';
+	cursorR.style.height = 2*r + 'px';
 	ctx.lineWidth = 2*r;
 
 	var mouseE = new Object();
@@ -114,10 +134,10 @@ var putPoint = function(e) {
 		ctx.moveTo(mouseX-delta/2,mouseY);
 		count++;
 
-		document.getElementById('cursor1').style.width = 2*r + 'px';
-		document.getElementById('cursor1').style.height = 2*r + 'px';
-		document.getElementById('cursor2').style.width = 2*r + 'px';
-		document.getElementById('cursor2').style.height = 2*r + 'px';
+		cursorL.style.width = 2*r + 'px';
+		cursorL.style.height = 2*r + 'px';
+		cursorR.style.width = 2*r + 'px';
+		cursorR.style.height = 2*r + 'px';
 	}
 }
 
@@ -136,10 +156,17 @@ var movecursor = function(e) {
 	mouseX = e.layerX;
 	mouseY = e.layerY;
 
-	document.getElementById('cursor1').style.left = mouseX-r-delta/2+lefto + 'px';
-	document.getElementById('cursor1').style.top = mouseY-r+topo + 'px';
-	document.getElementById('cursor2').style.left = mouseX-r+delta/2+lefto+canvas.width/2 + 'px';
-	document.getElementById('cursor2').style.top = mouseY-r+topo + 'px';
+	cursorL.style.left = mouseX-r-delta/2+lefto + 'px';
+	cursorL.style.top = mouseY-r+topo + 'px';
+	cursorR.style.left = mouseX-r+delta/2+lefto+canvas.width/2 + 'px';
+	cursorR.style.top = mouseY-r+topo + 'px';
+}
+
+function changeColor(e) {
+	ctx.fillStyle = e.style.background;
+	ctx.strokeStyle = e.style.background;
+	cursorL.style.background = e.style.background;
+	cursorR.style.background = e.style.background;
 }
 
 canvas.addEventListener('mousedown', start);

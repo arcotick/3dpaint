@@ -16,8 +16,19 @@
 			<li>A/D: Change depth and size of brush relative to depth</li>
 			<li>Z: Erase mode</li>
 			<li><input id="depth" type="checkbox" checked="true"> Depth dependant brush size</li>
-			<li><input id="depth" type="checkbox" checked="true" value="Show brush"></li>
-			<li><button style="background: red; width: 20px; height: 20px; border-radius: 100%;"></button></li>
+			<li><button id="brush" type="checkbox" onclick="showBrush()"> Hide Brush</li>
+			<li style="text-align: center;">
+				<ul style="list-style: none">
+					<li><button class="colours" style="background: orange;" onclick="changeColor(this)"></button></li>
+					<li><button class="colours" style="background: yellow;" onclick="changeColor(this)"></button></li>
+					<li><button class="colours" style="background: green;" onclick="changeColor(this)"></button></li>
+					<li><button class="colours" style="background: lightblue;" onclick="changeColor(this)"></button></li>
+					<li><button class="colours" style="background: blue;" onclick="changeColor(this)"></button></li>
+					<li><button class="colours" style="background: purple;" onclick="changeColor(this)"></button></li>
+					<li><button class="colours" style="background: pink;" onclick="changeColor(this)"></button></li>
+					<li><button class="colours" style="background: red;" onclick="changeColor(this)"></button></li>
+				</ul>
+			</li>
 		</ul>
 	</div>
 
