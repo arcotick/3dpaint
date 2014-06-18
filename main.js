@@ -54,14 +54,23 @@ function doKeyDown(e) {
 	if (e.keyCode == 68) {delta+=0.5;if (r<=100 && document.getElementById('depth').checked) {r*=1.02}; };
 	if (e.keyCode == 65) {delta-=0.5;if(r>=.8 && document.getElementById('depth').checked) {r*=0.98}};
 	if (e.keyCode == 90) {
-		erasing = true;
+		erasing = !erasing;
 
-		ctx.fillStyle = "white";
-		ctx.strokeStyle = "white";
-		document.getElementById('cursor1').style.background = 'white';
-		document.getElementById('cursor1').style.border = '1px solid black';
-		document.getElementById('cursor2').style.background = 'white';
-		document.getElementById('cursor2').style.border = '1px solid black';
+		if (erasing) {
+			ctx.fillStyle = "white";
+			ctx.strokeStyle = "white";
+			document.getElementById('cursor1').style.background = 'white';
+			document.getElementById('cursor1').style.border = '1px solid black';
+			document.getElementById('cursor2').style.background = 'white';
+			document.getElementById('cursor2').style.border = '1px solid black';
+		} else {
+			ctx.fillStyle = "black";
+			ctx.strokeStyle = "black";
+			document.getElementById('cursor1').style.background = 'black';
+			document.getElementById('cursor1').style.border = '1px solid rgba(0,0,0,0)';
+			document.getElementById('cursor2').style.background = 'black';
+			document.getElementById('cursor2').style.border = '1px solid rgba(0,0,0,0)';
+		}
 	};
 
 	document.getElementById('cursor1').style.width = 2*r + 'px';
@@ -74,18 +83,6 @@ function doKeyDown(e) {
 	mouseE.layerX = mouseX;
 	mouseE.layerY = mouseY;
 	movecursor(mouseE);
-}
-function doKeyUp(e) {
-	if (e.KeyCode == 90 && erasing) {
-		console.log(1);
-		ctx.fillStyle = "black";
-		ctx.strokeStyle = "black";
-		document.getElementById('cursor1').style.background = 'black';
-		document.getElementById('cursor1').style.border = '1px solid rgba(0,0,0,0)';
-		document.getElementById('cursor2').style.background = 'black';
-		document.getElementById('cursor2').style.border = '1px solid rgba(0,0,0,0)';
-		erasing = false;
-	};
 }
 
 var putPoint = function(e) {
@@ -130,15 +127,6 @@ var start = function(e) {
 }
 
 var end = function(e) {
-	if (erasing) {
-		ctx.fillStyle = "black";
-		ctx.strokeStyle = "black";
-		document.getElementById('cursor1').style.background = 'black';
-		document.getElementById('cursor1').style.border = '1px solid rgba(0,0,0,0)';
-		document.getElementById('cursor2').style.background = 'black';
-		document.getElementById('cursor2').style.border = '1px solid rgba(0,0,0,0)';
-		erasing = false;
-	};
 	painting = false;
 	ctx.beginPath();
 	count = 0;
@@ -158,5 +146,4 @@ canvas.addEventListener('mousedown', start);
 canvas.addEventListener('mousemove', putPoint);
 canvas.addEventListener('mouseup', end);
 window.addEventListener('keydown', doKeyDown);
-window.addEventListener('keyup', doKeyUp);
 canvas.addEventListener('mousemove', movecursor);
