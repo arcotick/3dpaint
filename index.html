@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>3D Paint</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<div id="cursor1"></div>
+	<div id="cursor2"></div>
+
+	<div id="text">
+		<span style="font-size: 56px; padding: 20px;">Controls:</span>
+		<ul style="list-style: none">
+			<li>Click: Paint</li>
+			<li>W/S: Change brush size</li>
+			<li>A/D: Change depth and size of brush relative to depth</li>
+			<li><input id="depth" type="checkbox"> Depth dependant brush size</li>
+		</ul>
+	</div>
+
+	<canvas id="canvas" tabindex="0"></canvas>
+	<script src="main.js"></script>
+</body>
+</html>
