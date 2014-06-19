@@ -3,19 +3,34 @@ canvas.focus();
 var ctx = canvas.getContext('2d');
 var img = canvas.toDataURL("image/png");
 
-canvas.width = window.innerWidth/2;
-canvas.height = window.innerHeight/2;
+var w,h,lefto,topo;
 
-var lefto = (window.innerWidth-canvas.width)/2,
-	topo = (window.innerHeight-canvas.height)/2;
+function setupCanvasSize() {
+	var dpi = window.devicePixelRatio || 1;
 
-canvas.style.left = lefto + 'px';
-canvas.style.top = topo + 'px';
+	w = window.innerWidth/2;
+	h = window.innerHeight/2;
 
-window.onload = function() {
+	console.log(w,h)
+
+	lefto = (window.innerWidth-w)/2;
+	topo = (window.innerHeight-h)/2;
+
+	canvas.width = dpi * w;
+	canvas.height = dpi * h;
+
+	canvas.style.left = lefto + 'px';
+	canvas.style.top = topo + 'px';
+	canvas.style.width = w + 'px';
+	canvas.style.height = h + 'px';
+
+	ctx.scale(dpi,dpi);
+}
+
+function drawScene() {
 	ctx.beginPath();
-	ctx.moveTo(Math.round(canvas.width/2)+.5,0);
-	ctx.lineTo(Math.round(canvas.width/2)+.5,canvas.height);
+	ctx.moveTo(Math.round(w/2)+.5,0);
+	ctx.lineTo(Math.round(w/2)+.5,h);
 	ctx.strokeStyle = "#666";
 	ctx.lineWidth = 1;
 	ctx.stroke();
@@ -24,22 +39,14 @@ window.onload = function() {
 	ctx.lineWidth = r*2;
 }
 
-window.onresize = function() {
-	canvas.width = window.innerWidth/2;
-	canvas.height = window.innerHeight/2;
-	ctx.beginPath();
-	ctx.moveTo(canvas.width/2+.5,20);
-	ctx.lineTo(canvas.width/2+.5,canvas.height-20);
-	ctx.strokeStyle = "#666";
-	ctx.lineWidth = 1;
-	ctx.stroke();
-	ctx.beginPath();
-	ctx.strokeStyle = "black";
-	ctx.lineWidth = r*2;
+function setupCanvas() {
+	setupCanvasSize();
+	drawScene();
 }
+
+window.onload = window.onresize = setupCanvas;
 
 var count = 0;
-
 var r = 2;
 var painting = false;
 var erasing = false;
@@ -90,11 +97,11 @@ function doKeyUp(e) {
 
 var putPoint = function(e) {
 	if (painting) {
-		var px = mouseX + canvas.width/2 + delta/2;
+		var px = mouseX + w/2 + delta/2;
 		var py = mouseY;
 
 		if (count == 0) {
-			oldpx = mouseX + canvas.width/2 + delta/2;
+			oldpx = mouseX + w/2 + delta/2;
 			oldpy = mouseY;
 		};
 
@@ -111,7 +118,7 @@ var putPoint = function(e) {
 		ctx.lineTo(oldpx, oldpy);
 		ctx.stroke();
 
-		oldpx = mouseX + canvas.width/2 + delta/2;
+		oldpx = mouseX + w/2 + delta/2;
 		oldpy = mouseY;
 
 		ctx.moveTo(mouseX-delta/2,mouseY);
@@ -150,7 +157,7 @@ var movecursor = function(e) {
 
 	document.getElementById('cursor1').style.left = mouseX-r-delta/2+lefto + 'px';
 	document.getElementById('cursor1').style.top = mouseY-r+topo + 'px';
-	document.getElementById('cursor2').style.left = mouseX-r+delta/2+lefto+canvas.width/2 + 'px';
+	document.getElementById('cursor2').style.left = mouseX-r+delta/2+lefto+w/2 + 'px';
 	document.getElementById('cursor2').style.top = mouseY-r+topo + 'px';
 }
 
