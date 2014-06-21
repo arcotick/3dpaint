@@ -5,35 +5,51 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-	<div id="cursor1"></div>
-	<div id="cursor2"></div>
+	<div id="lmouse"></div>
+	<div id="rmouse"></div>
 
-	<div id="text">
-		<span style="font-size: 56px; padding: 20px;">Controls:</span>
-		<ul style="list-style: none">
-			<li>Click: Paint</li>
-			<li>W/S: Change brush size</li>
-			<li>A/D: Change depth and size of brush relative to depth</li>
-			<li>Z: Erase mode</li>
-			<li><input id="depth" type="checkbox" checked="true"> Depth dependant brush size</li>
-			<li><button id="brush" type="checkbox" onclick="showBrush()"> Hide Brush</li>
-			<li style="text-align: center;">
-				<ul style="list-style: none">
-					<li><button class="colours" style="background: black;" onclick="changeColor(this)"></button></li>
-					<li><button class="colours" style="background: orange;" onclick="changeColor(this)"></button></li>
-					<li><button class="colours" style="background: yellow;" onclick="changeColor(this)"></button></li>
-					<li><button class="colours" style="background: green;" onclick="changeColor(this)"></button></li>
-					<li><button class="colours" style="background: lightblue;" onclick="changeColor(this)"></button></li>
-					<li><button class="colours" style="background: blue;" onclick="changeColor(this)"></button></li>
-					<li><button class="colours" style="background: purple;" onclick="changeColor(this)"></button></li>
-					<li><button class="colours" style="background: pink;" onclick="changeColor(this)"></button></li>
-					<li><button class="colours" style="background: red;" onclick="changeColor(this)"></button></li>
-				</ul>
-			</li>
-		</ul>
+	<div id="toolbox">
+		<div id="controls" style="position: fixed; fixed: top">
+			<span class="title" style="margin-bottom: 15px">Controls</span>
+			<hr style="margin-bottom: 15px; margin-top: 10px; height: 1px; border: none; background-color: rgb(100,100,100)">
+			<ul style="list-style: none;">
+				<li>
+					Painting size:
+					<input id="canvascontrol" type="range" min="0" max="1" step=".01" value=".8">
+				</li>
+				<li>
+					Brush size:
+					<input id="sizecontrol" type="range" min="0" max="80" step=".1" value="15">
+				</li>
+				<li>
+					Depth:
+					<input id="depthcontrol" type="range" min="-300" max="300" step="1" value="0">
+				</li>
+				<li>
+					<input type="checkbox" id="dd" onclick="function() {this.checked = !this.checked}" />
+					<label for="dd">Depth changes size</label>
+				</li>
+				<li>
+					Color:
+					<input type="color" id="color" value="#000">
+				</li>
+				<li>
+					3D type:
+					<select id="watchtype">
+						<option value="cro">Cross-view</option>
+						<option value="par">Parallel view</option>
+					</select>
+				</li>
+				<li><button id="mousecontrol" type="checkbox" onclick="showBrush()">Hide mouse</button></li>
+				<li><button onclick="resetCanvas()">Erase canvas</button></li>
+				<li><button onclick="downloadCanvas()">Download canvas</button></li>
+			</ul>
+		</div>
+		<div id="arrow"></div>
 	</div>
 
-	<canvas id="canvas" tabindex="0"></canvas>
+	<div id="paintarea"><canvas id='left' tabindex='0'></canvas><canvas id='right' tabindex='0'></canvas></div>
+	
 	<script src="main.js"></script>
 </body>
 </html>
