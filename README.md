@@ -12,3 +12,8 @@ S: Smaller brush size
 
 A: Move mouse further
 D: Move mouse closer
+
+Disclaimer
+==========
+
+This is in early alpha, so really expect one or more errors.
